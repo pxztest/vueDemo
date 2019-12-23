@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性,方法,侦听器</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!--{{fullName}}-->
+        <p v-text="age"></p>
+        <p v-text="fullName3"></p>
+        <!--<p v-html="fullName1()"></p>-->
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                firstName:'xiaoping',
+                lastName:'zou',
+                age:25,
+                fullName3:'zou xiaoping'
+            },
+      /*      computed:{
+                //计算属性具有缓存效果,数据发生改变才会刷新,推荐使用
+                fullName:function () {
+                    console.log('数据发生改变了,更新缓存');
+                    return this.lastName +' ' + this.firstName;
+                }
+            },
+            methods:{
+                //使用方法实现数据显示,没有缓存效果
+                fullName1:function(){
+                    console.log('我在加载数据');
+                    return this.lastName +' ' + this.firstName;
+                }
+            },*/
+            watch:{
+                //监听器,监听firstName 和lastName的改变
+                firstName:function () {
+                    this.fullName3 = this.lastName + this.firstName;
+                },
+                lastName:function () {
+                    this.fullName3 = this.lastName + this.firstName;
+                }
+
+
+            }
+        })
+    </script>
+</body>
+</html>

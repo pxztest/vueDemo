@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue实例生命周期函数</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        {{message}}
+    </div>
+    <script>
+        //生命周期函数就是在某一个时间会自动执行的函数
+        var vm = new Vue({
+            el:'#root',
+            beforeCreate:function(){
+                //在配置数据观测之前执行 Observe Data
+                console.log('beforeCreate')
+            },
+            created:function(){
+                //实例被创建之后执行 Init Events
+                console.log('created')
+            },
+            beforeMount:function(){
+                //在即将挂载渲染页面之前执行
+                console.log(this.$el);
+                console.log('beforeMount')
+            },
+            mounted:function(){
+                //在页面挂载渲染完毕之后执行
+                console.log(this.$el);
+                console.log('mounted');
+            },
+            beforeDestroy:function(){
+                //在实例即将被销毁之前执行
+                console.log('beforeDestroy')
+            },
+            destroyed:function(){
+                //在实例即将被销毁之后执行
+                console.log('destroyed');
+            },
+            beforeUpdate:function(){
+                //在数据发生改变之前执行
+                console.log('beforeUpdate');
+            },
+            updated:function(){
+                //在数据发生改变之后执行
+                console.log('updated');
+            },
+            data:{
+                message:'123'
+            }
+        })
+    </script>
+</body>
+</html>

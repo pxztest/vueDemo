@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloWorld</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- v-model 双向绑定,inputValue的值发生改变另一边也将发生改变-->
+        <input type="text" v-model="inputValue"/>
+        <!--@click 点击事件-->
+        <button @click="handleBtnClick">提交</button>
+        <ul>
+            <todo-item
+                    v-bind:content="item"
+                    v-bind:index="index"
+                    v-for="(item,index) in list"
+                    @delete="handleItemDelete"><!--监听delete事件-->
+            </todo-item>
+        </ul>
+    </div>
+    <script>
+        //全局组件 content变量用props接收,template中使用{{}}获取标签数据
+ /*       Vue.component("TodoItem",{
+            props:['content'],
+            template:"<li>{{content}}</li>"
+        });*/
+        //局部组件,components中注册TodoItem局部组件就可使用
+        var TodoItem = {
+            props:['content','index'],
+            template:"<li @click='handelItemClick'>{{content}}</li>",
+            methods:{
+                handelItemClick:function () {
+                    //触发delete事件,传递要删除的下标
+                    this.$emit("delete",this.index)
+                }
+            }
+        };
+        var app = new Vue({
+            el:'#app',
+            components:{
+                TodoItem:TodoItem
+            },
+            data:{
+                list:[],
+                inputValue:''
+            },
+            methods:{
+                handleBtnClick:function () {
+                    this.list.push(this.inputValue);
+                    this.inputValue = '';
+                },
+                handleItemDelete:function (index) {
+                    this.list.splice(index,1)
+                }
+            }
+        });
+        // setTimeout(function (){
+        //     TodoItem.$props.bind() = 'by world';
+        // },2000);
+    </script>
+</body>
+
+</html>
